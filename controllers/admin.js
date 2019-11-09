@@ -23,22 +23,17 @@ exports.getEditProduct = (req, res, next) => {
   if (!editMode) {
     return res.redirect('/');
   }
-  const prodId = req.params.prodId;
+  const prodId = req.params.productId;
   Product.findById(prodId, product => {
     if (!product) {
       return res.redirect('/');
     }
     res.render('admin/edit-product', {
       pageTitle: 'Edit Product',
-      path: '/admiun/edit-product',
+      path: '/admin/edit-product',
       editing: editMode,
       product: product
     });
-  });
-  res.render('admin/edit-product', {
-    pageTitle: 'Add Product',
-    path: '/admin/edit-product',
-    editing: editMode
   });
 };
 
