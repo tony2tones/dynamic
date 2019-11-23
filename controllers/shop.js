@@ -1,13 +1,14 @@
 const Product = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll(products => {
-    res.render('shop/product-list', {
-      prods: products,
+  Product.fetchAll()
+    .then(([rows, fieldData]) => {
+      res.render('shop/product-list', {
+      prods: rows,
       pageTitle: 'All Products',
       path: '/products'
     });
-  });
+  }).catch(err => console.log(err));
 };
 
 exports.getProduct = (req, res, next) => {
@@ -17,17 +18,17 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll().then(([row, fieldData]) => {
-    res
-      .render('shop/index', {
+  Product.fetchAll()
+    .then(([row, fieldData]) => {
+      res.render('shop/index', {
         prods: row,
         pageTitle: 'Shop',
         path: '/'
-      })
-      .catch(err => {
-        console.log('this is your error ', err);
       });
-  });
+    })
+    .catch(err => {
+      console.log('this is your error ', err);
+    });
 };
 
 exports.getCart = (req, res, next) => {
