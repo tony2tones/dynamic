@@ -2,7 +2,8 @@ const Cart = require('./cart');
 const db = require('../util/database');
 
 module.exports = class Product {
-  constructor(title, imageUrl, description, price) {
+  constructor(id, title, imageUrl, description, price) {
+    this.id = id;
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
@@ -11,7 +12,7 @@ module.exports = class Product {
 
   save() {
     return db.execute(
-      'INSERT INTO product (title, price, imgurl, description) VALUES (?,?,?,?)',
+      'INSERT INTO products (title, price, imageUrl, description) VALUES (?,?,?,?)',
       [this.title, this.price, this.imageUrl, this.description]
     );
   }
@@ -22,5 +23,7 @@ module.exports = class Product {
     return db.execute('SELECT * FROM products');
   }
 
-  static findById(id) {}
+  static findById(id) {
+    return db.execute('SELECT * FROM products WHERE products.id = ?', [id])
+  }
 };
