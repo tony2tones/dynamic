@@ -19,11 +19,8 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description
   })
-    .then(result => {
-      console.log(result);
-      res.redirect('/admin/products');
-    })
-    .catch(err => console.log(err));
+    .then(result => console.log(' creates a prdouct'))
+    .catch(error => console.log(error));
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -35,7 +32,7 @@ exports.getEditProduct = (req, res, next) => {
   Product.findByPk(prodId)
     .then(product => {
       if (!product) {
-        return res.redirect('/');
+        return res.redirect('/admin/edit-product');
       }
       res.render('admin/edit-product', {
         pageTitle: 'Edit Product',
